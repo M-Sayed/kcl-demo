@@ -1,0 +1,39 @@
+# docker-compose.yml
+version: '3.3'
+
+services:
+  localstack:
+      image: localstack/localstack:0.11.0
+      container_name: localstack-for-kcl-demo
+      ports:
+        - "8080:8080"
+        - "4566:4566"
+      environment:
+        - DATA_DIR=/tmp/localstack/data
+        - DEBUG=${LOCALSTACK_DEBUG:-true}
+        - DEFAULT_REGION=us-east-1
+        - SERVICES=dynamodb,kinesis
+        - USE_SSL=true
+      volumes:
+        - "${PWD}/aws:/root/.aws"
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        - "localstack-data:/tmp/localstack"
+
+  # postgresql:
+  #   image: postgres:14.3
+  #   ports: ["127.0.0.1:5432:5432"]
+  #   environment:
+  #     POSTGRES_USER: "accredible"
+  #     POSTGRES_PASSWORD: "reverse"
+  #   volumes:
+  #     - kcl-demo-db-data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  # kcl-demo-db-data:
+  localstack-data:
+    driver: local

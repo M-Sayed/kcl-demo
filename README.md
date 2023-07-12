@@ -1,0 +1,5 @@
+- run `docker-compose up`: this will install localstack
+- in a different terminal tab, open logs with `tail -f log/development.log`
+- in a different terminal tab run `cd terraform && terraform init && terraform apply -a`
+- run `foreman start`
+- run rails kcl:seed

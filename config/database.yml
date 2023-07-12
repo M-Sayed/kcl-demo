@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  port: 5432
+
+development:
+  <<: *default
+  database: kcl_demo_development
+  username: accredible
+  password: reverse
+
+test:
+  <<: *default
+  database: kcl_demo_test
+  username: accredible
+  password: reverse
+
+production:
+  <<: *default
+  database: kcl_demo_production
+  username: kcl_demo
+  password: <%= ENV['KCL_DEMO_DATABASE_PASSWORD'] %>
